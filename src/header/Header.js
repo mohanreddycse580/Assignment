@@ -37,7 +37,7 @@ class Header extends React.Component {
               open={Boolean(anchorEl)}
               onClose={this.handleClose}
             >
-              <MenuItem href="#" onClick={this.handleClose}>
+              <MenuItem href="add" onClick={this.handleClose}>
                 Add
               </MenuItem>
               <MenuItem href="#" onClick={this.handleClose}>
@@ -45,7 +45,7 @@ class Header extends React.Component {
               </MenuItem>
             </Menu>
 
-            <Button href="#">Claims</Button>
+            <Button href="/add">Claims</Button>
 
             <Button href="#">Insurance Payers</Button>
           </Toolbar>
