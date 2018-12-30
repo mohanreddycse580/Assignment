@@ -1,14 +1,14 @@
 import React from "react";
-import "./claim.css";
+
 import axios from "axios";
 
-class Claim extends React.Component {
+class InsurenePayer extends React.Component {
   constructor() {
     super();
     this.state = {
       data: [],
-      claim: [],
-      havingClaims: false
+      insurenceDetails: [],
+      havinginsurence: false
     };
   }
 
@@ -20,7 +20,7 @@ class Claim extends React.Component {
     });
   } */
   componentDidMount() {
-    axios.get("claims.json").then(res => {
+    axios.get("insurencepayer.json").then(res => {
       const data = res.data;
       this.setState({ data });
     });
@@ -31,66 +31,62 @@ class Claim extends React.Component {
     //alert(e.target.value);
     if (e.target.value === "") {
       this.setState({
-        claim: "",
-        havingClaims: false
+        insurenceDetails: "",
+        havinginsurence: false
       });
     } else {
       if (e.target.value === "all") {
-        const claim = this.state.data;
+        const insure = this.state.data;
         this.setState({
-          claim: claim,
-          havingClaims: true
+          insurenceDetails: insure,
+          havinginsurence: true
         });
       } else {
         const claim = this.state.data.filter(row => {
-          return row.user_id.match(e.target.value);
+          return row.payer_name.match(e.target.value);
         });
         this.setState({
-          claim: claim,
-          havingClaims: true
+          insurenceDetails: claim,
+          havinginsurence: true
         });
       }
     }
   };
   render() {
-    const havingClaims = this.state.havingClaims;
+    const havinginsurence = this.state.havinginsurence;
     return (
       <div className="App">
-        <h1>CLAIM DETAILS </h1>
+        <h1>INSURENCE PAYER DETAILS </h1>
         <select onChange={this.handleChange}>
           <option value="" selected>
-            Select User
+            Select Insurance payer
           </option>
-          {this.state.data.map(function(claim, key) {
+          {this.state.data.map(function(insurence, key) {
             return (
-              <option key={key} value={claim.user_id}>
-                {claim.user_id}
+              <option key={key} value={insurence.payer_name}>
+                {insurence.payer_name}
               </option>
             );
           })}
           <option value="all">ALL</option>
         </select>
-        {havingClaims ? (
+        {havinginsurence ? (
           <div className="tableOrder">
             <table>
               <tr>
-                <th>ClaimId</th>
-                <th>UserId</th>
-                <th>ClaimName</th>
-                <th>ClaimAmount</th>
-                <th>ClaimSubmitedDate</th>
-                <th>HospitalName</th>
-                <th>ClaimStatus</th>
+                <th>Payer Name</th>
+                <th>Clain Id</th>
+                <th>Claim Amount Submited</th>
+                <th>Claim Amount Approved</th>
+                <th>Claim Aproval Status</th>
               </tr>
-              {this.state.claim.map((row, index) => (
+              {this.state.insurenceDetails.map((row, index) => (
                 <tr>
+                  <td>{row.payer_name}</td>
                   <td>{row.claim_id}</td>
-                  <td>{row.user_id}</td>
-                  <td>{row.claim_name}</td>
-                  <td>{row.claim_amount}</td>
-                  <td>{row.claim_submited_date}</td>
-                  <td>{row.hospital_name}</td>
-                  <td>{row.claim_status}</td>
+                  <td>{row.claim_amount_submited}</td>
+                  <td>{row.claim_amount_approved}</td>
+                  <td>{row.claim_aproval_status}</td>
                 </tr>
               ))}
             </table>
@@ -103,4 +99,4 @@ class Claim extends React.Component {
   }
 }
 
-export default Claim;
+export default InsurenePayer;

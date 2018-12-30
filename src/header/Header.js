@@ -23,7 +23,7 @@ class Header extends React.Component {
             <a href="/claim">Claims </a>
           </li>
           <li>
-            <a href="#">Insurance Payers </a>
+            <a href="/insurence">Insurance Payers </a>
           </li>
         </ul>
       </nav>
