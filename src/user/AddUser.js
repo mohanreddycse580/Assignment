@@ -14,48 +14,25 @@ class AddUser extends Component {
       age: "",
       gender: "",
       address: "",
-      redirectToReferrer: false,
-      users: []
+      redirectToReferrer: false
     };
 
-    this.addUser = this.addUser.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount() {
-    /*axios.get("./json/userDummy.json").then(res => {
-      const users = res.data;
-      this.setState({ users });
-    });*/
-    /*fetch("././json/userDummy.json")
-      .then(response => response.json())
-      .then(findresponse => {
-        this.setState({
-          users: findresponse
-        });
-        console.log(this.users);
-      }); */
-    const fs = require("fs");
-
-    let student = {
-      name: "Mike",
-      age: 23,
-      gender: "Male",
-      department: "English",
-      car: "Honda"
-    };
-
-    let data = JSON.stringify(student);
-    fs.writeFileSync("student-2.json", data);
-  }
-  addUser(event) {
+  handleSubmit = event => {
     event.preventDefault();
     console.log(this.state);
-    axios.post("./json/userDummy1.json", this.state).then(res => {
-      console.log(res);
-      console.log(res.data);
-    });
-
+    const user = {
+      user_id: this.state.user_id,
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
+      age: this.state.age,
+      gender: this.state.gender,
+      address: this.state.address
+    };
+    console.log("user:" + this.state.user_id);
     if (
       this.state.user_id &&
       this.state.first_name &&
@@ -67,8 +44,37 @@ class AddUser extends Component {
       this.setState({
         redirectToReferrer: true
       });
+      debugger;
+      const writeJsonFile = require("write-json-file");
+      writeJsonFile("foo.json", { user });
+      /*
+      fetch("userdetails.json", {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
+      })
+        .then(res => res.json())
+        .then(res => console.log(res))
+        .catch(errors => console.log(errors));
+
+       axios
+        .put("userdetails.json", {
+          body: JSON.stringify(user),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          }
+        })
+        .then(res => {
+          console.log(res);
+          console.log(res.data);
+          console.log(user);
+        }); */
     }
-  }
+  };
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -80,8 +86,8 @@ class AddUser extends Component {
     }
     return (
       <div className="container">
-        <div>
-          <h1>Add User</h1>
+        <h1>Add User</h1>
+        <form onSubmit={this.handleSubmit}>
           <label>User Id</label>
           <input
             type="text"
@@ -89,7 +95,7 @@ class AddUser extends Component {
             placeholder="User Id"
             onChange={this.handleChange}
             required
-          />{" "}
+          />
           <br />
           <label>First Name</label>
           <input
@@ -98,7 +104,7 @@ class AddUser extends Component {
             placeholder="First Name"
             onChange={this.handleChange}
             required
-          />{" "}
+          />
           <br />
           <label>Last Name</label>
           <input
@@ -138,16 +144,8 @@ class AddUser extends Component {
             />
           </label>
           <br />
-          <input
-            type="submit"
-            className="button"
-            value="Add"
-            onClick={this.addUser}
-          />
-        </div>
-        {this.state.users.map(user => (
-          <li>{user.id}</li>
-        ))}
+          <button type="submit">Add</button>
+        </form>
       </div>
     );
   }
