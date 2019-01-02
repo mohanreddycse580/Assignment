@@ -44,9 +44,11 @@ class AddUser extends Component {
       this.setState({
         redirectToReferrer: true
       });
-      debugger;
-      const writeJsonFile = require("write-json-file");
-      writeJsonFile("foo.json", { user });
+
+      axios.post("userdetails.json", { user }).then(res => {
+        console.log(res);
+        console.log(res.data);
+      });
       /*
       fetch("userdetails.json", {
         method: "PUT",
