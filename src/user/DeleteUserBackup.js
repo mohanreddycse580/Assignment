@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./AddUser.css";
-import { Link } from "react-router-dom";
 
 class DeleteUser extends Component {
   constructor(props) {
@@ -29,33 +28,33 @@ class DeleteUser extends Component {
       checkedItems: new Map()
     };
 
-    this.deletehandleChange = this.deletehandleChange.bind(this);
-    //this.handleChange = this.handleChange.bind(this);
+    this.deleteFeedAction = this.deleteFeedAction.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
-  /*handleChange(e) {
+  handleChange(e) {
     const item = e.target.name;
     const isChecked = e.target.checked;
     this.setState(prevState => ({
       checkedItems: prevState.checkedItems.set(item, isChecked)
     }));
-  } */
+  }
 
   componentWillMount() {
     const data = JSON.parse(JSON.stringify(this.state.users));
-    // console.log(data);
+    console.log(data);
     this.setState({
       data: data
     });
   }
-  deletehandleChange(e) {
+  deleteFeedAction(e) {
     let updateIndex = e.target.getAttribute("value");
 
-    //console.log(this.state.checkedItems.get(updateIndex));
+    console.log(this.state.checkedItems.get(updateIndex));
 
-    //if (this.state.checkedItems.get(updateIndex)) {
-    this.state.data.splice(updateIndex, 1);
-    this.setState({ data: this.state.data });
-    //}
+    if (this.state.checkedItems.get(updateIndex)) {
+      this.state.data.splice(updateIndex, 1);
+      this.setState({ data: this.state.data });
+    }
   }
   render() {
     return (
@@ -65,6 +64,11 @@ class DeleteUser extends Component {
         <div className="tableOrder">
           <table>
             <tr>
+              <th>
+                Select All:
+                <input key="" onChange="" type="checkbox" checked="" value="" />
+                <br />
+              </th>
               <th>User ID</th>
               <th>FirstName</th>
               <th>LastName</th>
@@ -75,6 +79,15 @@ class DeleteUser extends Component {
             </tr>
             {this.state.data.map((d, index) => (
               <tr>
+                <td>
+                  <input
+                    name={index}
+                    key={d.user_id}
+                    onChange={this.handleChange}
+                    type="checkbox"
+                    checked={this.state.checkedItems.get(index)}
+                  />
+                </td>
                 <td>{d.user_id}</td>
                 <td>{d.first_name}</td>
                 <td>{d.last_name}</td>
@@ -83,16 +96,8 @@ class DeleteUser extends Component {
                 <td>{d.address}</td>
 
                 <td>
-                  <Link
-                    to="/edit"
-                    params={{
-                      userdata: this.state.data[index]
-                    }}
-                  >
-                    <button type="button">Edit</button>
-                  </Link>
                   <button
-                    onClick={this.deletehandleChange}
+                    onClick={this.deleteFeedAction}
                     id={d.user_id}
                     value={index}
                   >
