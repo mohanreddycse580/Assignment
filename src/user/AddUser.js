@@ -45,10 +45,10 @@ class AddUser extends Component {
         redirectToReferrer: true
       });
 
-      axios.post("userdetails.json", { user }).then(res => {
+      /*axios.post("userdetails.json", { user }).then(res => {
         console.log(res);
         console.log(res.data);
-      });
+      }); 
       /*
       fetch("userdetails.json", {
         method: "PUT",
@@ -87,66 +87,111 @@ class AddUser extends Component {
       return <Redirect to={"/"} />;
     }
     return (
-      <div className="container">
-        <h1>Add User</h1>
+      <div>
+        <div>
+          <h1>Add User</h1>
+        </div>
         <form onSubmit={this.handleSubmit}>
-          <label>User Id</label>
-          <input
-            type="text"
-            name="user_id"
-            placeholder="User Id"
-            onChange={this.handleChange}
-            required
-          />
-          <br />
-          <label>First Name</label>
-          <input
-            type="text"
-            name="first_name"
-            placeholder="First Name"
-            onChange={this.handleChange}
-            required
-          />
-          <br />
-          <label>Last Name</label>
-          <input
-            type="text"
-            name="last_name"
-            placeholder="Last Name"
-            onChange={this.handleChange}
-            required
-          />
-          <br />
-          <label>Age</label>
-          <input
-            type="number"
-            name="age"
-            min="0"
-            max="100"
-            placeholder="age"
-            onChange={this.handleChange}
-            required
-          />
-          <br />
-          <label>Gender</label>
-          <div onChange={this.handleChange}>
-            <input type="radio" value="MALE" name="gender" />
-            Male
-            <input type="radio" value="FEMALE" name="gender" />
-            Female
+          <div class="row">
+            <div class="col-25">
+              <label>User Id</label>
+            </div>
+            <div class="col-75">
+              <input
+                type="text"
+                name="user_id"
+                placeholder="User Id"
+                onChange={this.handleChange}
+                required
+                pattern="[a-zA-Z0-9]{6,}"
+                title="Must contain at least 6 or more characters"
+              />
+            </div>
           </div>
-          <br />
-          <label>
-            Address:
-            <textarea
-              name="address"
-              value={this.state.address}
-              onChange={this.handleChange}
-              required
-            />
-          </label>
-          <br />
-          <button type="submit">Add</button>
+
+          <div class="row">
+            <div class="col-25">
+              <label>First Name</label>
+            </div>
+            <div class="col-75">
+              <input
+                type="text"
+                name="first_name"
+                placeholder="First Name"
+                onChange={this.handleChange}
+                pattern="[a-zA-Z ]{1,10}"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label>Last Name</label>
+            </div>
+            <div class="col-75">
+              <input
+                type="text"
+                name="last_name"
+                placeholder="Last Name"
+                onChange={this.handleChange}
+                required
+                pattern="[a-zA-Z ]{1,10}"
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label>Age</label>
+            </div>
+            <div class="col-75">
+              <input
+                type="number"
+                name="age"
+                min="0"
+                max="60"
+                placeholder="age"
+                onChange={this.handleChange}
+                required
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label>Gender</label>
+            </div>
+            <div class="col-75">
+              <div onChange={this.handleChange}>
+                <input type="radio" value="MALE" name="gender" required />
+                Male
+                <input type="radio" value="FEMALE" name="gender" required />
+                Female
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label>Address </label>
+            </div>
+            <div class="col-75">
+              <textarea
+                rows="4"
+                cols="25"
+                name="address"
+                value={this.state.address}
+                onChange={this.handleChange}
+                required
+                pattern="[a-zA-Z ]{10,100}"
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <input type="submit" value="Add" />
+          </div>
         </form>
       </div>
     );

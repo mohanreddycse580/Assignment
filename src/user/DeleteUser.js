@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./AddUser.css";
 
 class DeleteUser extends Component {
   constructor(props) {
@@ -49,15 +48,9 @@ class DeleteUser extends Component {
   }
   deleteFeedAction(e) {
     let updateIndex = e.target.getAttribute("value");
-    alert(updateIndex);
-    alert(this.state.checkedItems.get(updateIndex));
-    this.state.checkedItems.map(
-      (recors, index) => (
-        console.log(index),
-        this.state.data.splice(index, 1),
-        this.setState({ data: this.state.data })
-      )
-    );
+
+    this.state.data.splice(updateIndex, 1);
+    this.setState({ data: this.state.data });
   }
 
   render() {
@@ -68,11 +61,6 @@ class DeleteUser extends Component {
         <div className="tableOrder">
           <table>
             <tr>
-              <th>
-                Select All:
-                <input key="" onChange="" type="checkbox" checked="" value="" />
-                <br />
-              </th>
               <th>User ID</th>
               <th>FirstName</th>
               <th>LastName</th>
@@ -83,15 +71,6 @@ class DeleteUser extends Component {
             </tr>
             {this.state.data.map((d, index) => (
               <tr>
-                <td>
-                  <input
-                    name={index}
-                    key={d.user_id}
-                    onChange={this.handleChange}
-                    type="checkbox"
-                    checked={this.state.checkedItems.get(index)}
-                  />
-                </td>
                 <td>{d.user_id}</td>
                 <td>{d.first_name}</td>
                 <td>{d.last_name}</td>
